@@ -85,9 +85,9 @@ export default function NewInterviewPage() {
             case 1:
                 return jobTitle.trim().length > 0;
             case 2:
-                return true; // Resume is optional
+                return resumeFile !== null; // Resume is required
             case 3:
-                return true; // Self-intro is optional
+                return selfIntro.trim().length > 0; // Self-intro is required
             case 4:
                 return true;
             default:
@@ -240,9 +240,9 @@ export default function NewInterviewPage() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                     >
-                        <h2 className="text-2xl font-bold mb-2">Upload your resume</h2>
+                        <h2 className="text-2xl font-bold mb-2">Upload your resume *</h2>
                         <p className="text-text-secondary mb-8">
-                            The AI will ask questions from your experience and projects
+                            We need your resume to tailor the interview questions
                         </p>
 
                         <div
@@ -284,9 +284,6 @@ export default function NewInterviewPage() {
                             )}
                         </div>
 
-                        <p className="text-xs text-text-muted mt-3 text-center">
-                            You can skip this step — the AI will still interview you based on the job title
-                        </p>
                     </motion.div>
                 )}
 
@@ -298,7 +295,7 @@ export default function NewInterviewPage() {
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
                     >
-                        <h2 className="text-2xl font-bold mb-2">Tell us about yourself</h2>
+                        <h2 className="text-2xl font-bold mb-2">Tell us about yourself *</h2>
                         <p className="text-text-secondary mb-8">
                             A brief introduction so the interviewer knows your background
                         </p>
