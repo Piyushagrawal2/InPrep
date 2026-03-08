@@ -31,8 +31,8 @@ const difficulties = [
         value: "easy",
         label: "Easy",
         desc: "Introduction & basic questions. Great for warm-ups.",
-        color: "border-emerald-400/50 bg-emerald-400/5",
-        activeColor: "border-emerald-400 bg-emerald-400/15",
+        color: "border-border hover:!border-easy hover:bg-easy/10 hover:bg-none",
+        activeColor: "!border-easy bg-easy/10 bg-none ring-1 ring-easy",
         icon: "🌱",
         interviewer: "Sarah Mitchell — Senior HR Partner",
     },
@@ -40,8 +40,8 @@ const difficulties = [
         value: "intermediate",
         label: "Intermediate",
         desc: "In-depth technical questions, scenario-based problems.",
-        color: "border-amber-400/50 bg-amber-400/5",
-        activeColor: "border-amber-400 bg-amber-400/15",
+        color: "border-border hover:!border-intermediate hover:bg-intermediate/10 hover:bg-none",
+        activeColor: "!border-intermediate bg-intermediate/10 bg-none ring-1 ring-intermediate",
         icon: "⚡",
         interviewer: "David Chen — Engineering Manager",
     },
@@ -49,8 +49,8 @@ const difficulties = [
         value: "hard",
         label: "Hard",
         desc: "Senior-level questions, system design, high pressure.",
-        color: "border-rose-400/50 bg-rose-400/5",
-        activeColor: "border-rose-400 bg-rose-400/15",
+        color: "border-border hover:!border-hard hover:bg-hard/10 hover:bg-none",
+        activeColor: "!border-hard bg-hard/10 bg-none ring-1 ring-hard",
         icon: "🔥",
         interviewer: "Victoria Okafor — VP of Engineering",
     },
@@ -131,15 +131,15 @@ export default function NewInterviewPage() {
             {/* Header */}
             <header className="glass sticky top-0 z-50">
                 <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/dashboard" className="flex items-center gap-2">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                    <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer">
+                        <div className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
                             <Sparkles className="w-4.5 h-4.5 text-white" />
                         </div>
                         <span className="text-lg font-bold gradient-text">InPrep</span>
                     </Link>
                     <Link
                         href="/dashboard"
-                        className="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+                        className="text-sm text-text-secondary hover:text-text-primary"
                     >
                         Cancel
                     </Link>
@@ -154,10 +154,10 @@ export default function NewInterviewPage() {
                             <button
                                 onClick={() => s.id < step && setStep(s.id)}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all ${step === s.id
-                                        ? "bg-[var(--color-accent)]/15 text-[var(--color-accent)]"
-                                        : step > s.id
-                                            ? "text-emerald-400"
-                                            : "text-[var(--color-text-muted)]"
+                                    ? "bg-accent/15 text-accent"
+                                    : step > s.id
+                                        ? "text-emerald-400"
+                                        : "text-text-muted"
                                     }`}
                             >
                                 {step > s.id ? (
@@ -170,8 +170,8 @@ export default function NewInterviewPage() {
                             {i < steps.length - 1 && (
                                 <div
                                     className={`w-8 h-px ${step > s.id
-                                            ? "bg-emerald-400"
-                                            : "bg-[var(--color-border)]"
+                                        ? "bg-emerald-400"
+                                        : "bg-border"
                                         }`}
                                 />
                             )}
@@ -196,13 +196,13 @@ export default function NewInterviewPage() {
                         <h2 className="text-2xl font-bold mb-2">
                             What role are you interviewing for?
                         </h2>
-                        <p className="text-[var(--color-text-secondary)] mb-8">
+                        <p className="text-text-secondary mb-8">
                             We&apos;ll tailor the entire interview to this position
                         </p>
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5">
+                                <label className="block text-sm font-medium text-text-secondary mb-1.5">
                                     Job Title *
                                 </label>
                                 <input
@@ -216,9 +216,9 @@ export default function NewInterviewPage() {
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5">
+                                <label className="block text-sm font-medium text-text-secondary mb-1.5">
                                     Job Description{" "}
-                                    <span className="text-[var(--color-text-muted)]">(optional)</span>
+                                    <span className="text-text-muted">(optional)</span>
                                 </label>
                                 <textarea
                                     value={jobDescription}
@@ -241,14 +241,14 @@ export default function NewInterviewPage() {
                         exit={{ opacity: 0, x: -20 }}
                     >
                         <h2 className="text-2xl font-bold mb-2">Upload your resume</h2>
-                        <p className="text-[var(--color-text-secondary)] mb-8">
+                        <p className="text-text-secondary mb-8">
                             The AI will ask questions from your experience and projects
                         </p>
 
                         <div
-                            className={`card !p-8 border-2 border-dashed text-center cursor-pointer transition-all ${resumeFile
-                                    ? "border-emerald-400/50 bg-emerald-400/5"
-                                    : "border-[var(--color-border)] hover:border-[var(--color-accent)]/50"
+                            className={`card p-8! border-2 border-dashed text-center cursor-pointer transition-all ${resumeFile
+                                ? "border-emerald-400/50 bg-emerald-400/5"
+                                : "border-border hover:border-accent/50"
                                 }`}
                             onClick={() => document.getElementById("resume-input")?.click()}
                         >
@@ -267,24 +267,24 @@ export default function NewInterviewPage() {
                                 <>
                                     <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
                                     <p className="font-semibold text-emerald-400">{resumeFile.name}</p>
-                                    <p className="text-sm text-[var(--color-text-muted)] mt-1">
+                                    <p className="text-sm text-text-muted mt-1">
                                         {(resumeFile.size / 1024).toFixed(0)} KB • Click to change
                                     </p>
                                 </>
                             ) : (
                                 <>
-                                    <Upload className="w-12 h-12 text-[var(--color-text-muted)] mx-auto mb-3" />
+                                    <Upload className="w-12 h-12 text-text-muted mx-auto mb-3" />
                                     <p className="font-semibold">
                                         Drop your resume here or click to upload
                                     </p>
-                                    <p className="text-sm text-[var(--color-text-muted)] mt-1">
+                                    <p className="text-sm text-text-muted mt-1">
                                         PDF or DOCX, up to 10MB
                                     </p>
                                 </>
                             )}
                         </div>
 
-                        <p className="text-xs text-[var(--color-text-muted)] mt-3 text-center">
+                        <p className="text-xs text-text-muted mt-3 text-center">
                             You can skip this step — the AI will still interview you based on the job title
                         </p>
                     </motion.div>
@@ -299,7 +299,7 @@ export default function NewInterviewPage() {
                         exit={{ opacity: 0, x: -20 }}
                     >
                         <h2 className="text-2xl font-bold mb-2">Tell us about yourself</h2>
-                        <p className="text-[var(--color-text-secondary)] mb-8">
+                        <p className="text-text-secondary mb-8">
                             A brief introduction so the interviewer knows your background
                         </p>
 
@@ -311,7 +311,7 @@ export default function NewInterviewPage() {
                             rows={8}
                         />
 
-                        <p className="text-xs text-[var(--color-text-muted)] mt-3">
+                        <p className="text-xs text-text-muted mt-3">
                             The interviewer will reference this instead of asking you to
                             &quot;tell me about yourself&quot;
                         </p>
@@ -327,13 +327,13 @@ export default function NewInterviewPage() {
                         exit={{ opacity: 0, x: -20 }}
                     >
                         <h2 className="text-2xl font-bold mb-2">Interview settings</h2>
-                        <p className="text-[var(--color-text-secondary)] mb-8">
+                        <p className="text-text-secondary mb-8">
                             Choose your difficulty and duration
                         </p>
 
                         {/* Difficulty */}
                         <div className="mb-8">
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-3">
+                            <label className="block text-sm font-medium text-text-secondary mb-3">
                                 <Zap className="w-4 h-4 inline mr-1" /> Difficulty Level
                             </label>
                             <div className="space-y-3">
@@ -341,18 +341,18 @@ export default function NewInterviewPage() {
                                     <button
                                         key={d.value}
                                         onClick={() => setDifficulty(d.value)}
-                                        className={`w-full text-left card !py-3 !px-4 border transition-all ${difficulty === d.value ? d.activeColor : d.color
+                                        className={`w-full text-left card py-3! px-4! border transition-all cursor-pointer ${difficulty === d.value ? d.activeColor : d.color
                                             }`}
                                     >
                                         <div className="flex items-center gap-3">
                                             <span className="text-2xl">{d.icon}</span>
                                             <div className="flex-1">
                                                 <p className="font-semibold">{d.label}</p>
-                                                <p className="text-xs text-[var(--color-text-secondary)]">
+                                                <p className="text-xs text-text-secondary">
                                                     {d.desc}
                                                 </p>
                                             </div>
-                                            <p className="text-xs text-[var(--color-text-muted)] text-right">
+                                            <p className="text-xs text-text-muted text-right">
                                                 {d.interviewer}
                                             </p>
                                         </div>
@@ -363,7 +363,7 @@ export default function NewInterviewPage() {
 
                         {/* Duration */}
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-3">
+                            <label className="block text-sm font-medium text-text-secondary mb-3">
                                 <Clock className="w-4 h-4 inline mr-1" /> Duration
                             </label>
                             <div className="grid grid-cols-5 gap-3">
@@ -371,13 +371,13 @@ export default function NewInterviewPage() {
                                     <button
                                         key={d.value}
                                         onClick={() => setDuration(d.value)}
-                                        className={`card !p-3 text-center transition-all ${duration === d.value
-                                                ? "border-[var(--color-accent)] bg-[var(--color-accent)]/10"
-                                                : ""
+                                        className={`card p-3! text-center transition-all cursor-pointer ${duration === d.value
+                                            ? "border-accent bg-accent/10"
+                                            : ""
                                             }`}
                                     >
                                         <p className="font-bold text-lg">{d.label}</p>
-                                        <p className="text-xs text-[var(--color-text-muted)]">
+                                        <p className="text-xs text-text-muted">
                                             {d.desc}
                                         </p>
                                     </button>

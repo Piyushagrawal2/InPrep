@@ -80,7 +80,7 @@ export default function InterviewSummaryPage() {
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="w-10 h-10 border-2 border-[var(--color-accent)]/30 border-t-[var(--color-accent)] rounded-full animate-spin" />
+                <div className="w-10 h-10 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
             </div>
         );
     }
@@ -121,11 +121,11 @@ export default function InterviewSummaryPage() {
             {/* Header */}
             <header className="glass sticky top-0 z-50">
                 <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/dashboard" className="flex items-center gap-2 text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]">
+                    <Link href="/dashboard" className="flex items-center gap-2 text-text-secondary hover:text-text-primary">
                         <ArrowLeft className="w-5 h-5" /> Back to Dashboard
                     </Link>
                     <Link href="/dashboard" className="flex items-center gap-2">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                        <div className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
                             <Sparkles className="w-4.5 h-4.5 text-white" />
                         </div>
                     </Link>
@@ -137,13 +137,13 @@ export default function InterviewSummaryPage() {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="card !p-10 text-center mb-8 relative overflow-hidden"
+                    className="card p-10! text-center mb-8 relative overflow-hidden"
                 >
-                    <div className="absolute inset-0 bg-gradient-to-br from-violet-600/5 to-purple-600/5" />
+                    <div className="absolute inset-0 bg-linear-to-br from-violet-600/5 to-purple-600/5" />
                     <div className="relative z-10">
                         <Trophy className="w-12 h-12 text-amber-400 mx-auto mb-4" />
                         <h1 className="text-2xl font-bold mb-1">Interview Complete</h1>
-                        <p className="text-[var(--color-text-secondary)] mb-6">
+                        <p className="text-text-secondary mb-6">
                             {interview.job_title} •{" "}
                             <span className="capitalize">{interview.difficulty}</span> Level
                         </p>
@@ -151,7 +151,7 @@ export default function InterviewSummaryPage() {
                         <div className={`text-7xl font-bold ${scoreColor} mb-2`}>
                             {score.toFixed(1)}
                         </div>
-                        <p className="text-[var(--color-text-muted)] mb-4">out of 10</p>
+                        <p className="text-text-muted mb-4">out of 10</p>
 
                         <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${recColor[recommendation]}`}>
                             Recommendation: {recLabel[recommendation]}
@@ -174,11 +174,11 @@ export default function InterviewSummaryPage() {
                             transition={{ delay: i * 0.1 }}
                             className="card text-center"
                         >
-                            <item.icon className="w-6 h-6 text-[var(--color-accent)] mx-auto mb-2" />
+                            <item.icon className="w-6 h-6 text-accent mx-auto mb-2" />
                             <p className="text-2xl font-bold mb-1">
                                 {item.score > 0 ? item.score.toFixed(1) : "—"}
                             </p>
-                            <p className="text-xs text-[var(--color-text-secondary)]">
+                            <p className="text-xs text-text-secondary">
                                 {item.label}
                             </p>
                         </motion.div>
@@ -200,7 +200,7 @@ export default function InterviewSummaryPage() {
                             </div>
                             <ul className="space-y-2">
                                 {strengths.map((s: string, i: number) => (
-                                    <li key={i} className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+                                    <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
                                         <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
                                         {s}
                                     </li>
@@ -222,7 +222,7 @@ export default function InterviewSummaryPage() {
                             </div>
                             <ul className="space-y-2">
                                 {improvements.map((s: string, i: number) => (
-                                    <li key={i} className="flex items-start gap-2 text-sm text-[var(--color-text-secondary)]">
+                                    <li key={i} className="flex items-start gap-2 text-sm text-text-secondary">
                                         <AlertCircle className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
                                         {s}
                                     </li>
@@ -241,7 +241,7 @@ export default function InterviewSummaryPage() {
                         className="card mb-8"
                     >
                         <h3 className="font-semibold mb-3">Detailed Feedback</h3>
-                        <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed whitespace-pre-wrap">
+                        <p className="text-sm text-text-secondary leading-relaxed whitespace-pre-wrap">
                             {summary}
                         </p>
                     </motion.div>
@@ -251,17 +251,17 @@ export default function InterviewSummaryPage() {
                 <div className="card mb-8 flex items-center justify-around py-6">
                     <div className="text-center">
                         <p className="text-xl font-bold">{messageCount}</p>
-                        <p className="text-xs text-[var(--color-text-muted)]">Messages</p>
+                        <p className="text-xs text-text-muted">Messages</p>
                     </div>
-                    <div className="w-px h-8 bg-[var(--color-border)]" />
+                    <div className="w-px h-8 bg-border" />
                     <div className="text-center">
                         <p className="text-xl font-bold capitalize">{interview.difficulty}</p>
-                        <p className="text-xs text-[var(--color-text-muted)]">Difficulty</p>
+                        <p className="text-xs text-text-muted">Difficulty</p>
                     </div>
-                    <div className="w-px h-8 bg-[var(--color-border)]" />
+                    <div className="w-px h-8 bg-border" />
                     <div className="text-center">
                         <p className="text-xl font-bold">{interview.duration_minutes} min</p>
-                        <p className="text-xs text-[var(--color-text-muted)]">Duration</p>
+                        <p className="text-xs text-text-muted">Duration</p>
                     </div>
                 </div>
 

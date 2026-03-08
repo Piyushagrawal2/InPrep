@@ -57,17 +57,17 @@ function AuthContent() {
             >
                 {/* Logo */}
                 <Link href="/" className="flex items-center justify-center gap-2 mb-10">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
                         <Sparkles className="w-6 h-6 text-white" />
                     </div>
                     <span className="text-2xl font-bold gradient-text">InPrep</span>
                 </Link>
 
-                <div className="card !p-8">
+                <div className="card p-8!">
                     <h2 className="text-2xl font-bold mb-2">
                         {isRegister ? "Create your account" : "Welcome back"}
                     </h2>
-                    <p className="text-[var(--color-text-secondary)] mb-6">
+                    <p className="text-text-secondary mb-6">
                         {isRegister
                             ? "Start practicing interviews today"
                             : "Sign in to continue your preparation"}
@@ -82,17 +82,17 @@ function AuthContent() {
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {isRegister && (
                             <div>
-                                <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5">
+                                <label className="block text-sm font-medium text-text-secondary mb-1.5">
                                     Full Name
                                 </label>
                                 <div className="relative">
-                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
+                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                                     <input
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         placeholder="John Doe"
-                                        className="input-field !pl-11"
+                                        className="input-field pl-11!"
                                         required
                                     />
                                 </div>
@@ -100,41 +100,41 @@ function AuthContent() {
                         )}
 
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5">
+                            <label className="block text-sm font-medium text-text-secondary mb-1.5">
                                 Email
                             </label>
                             <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
+                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="you@example.com"
-                                    className="input-field !pl-11"
+                                    className="input-field pl-11!"
                                     required
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-[var(--color-text-secondary)] mb-1.5">
+                            <label className="block text-sm font-medium text-text-secondary mb-1.5">
                                 Password
                             </label>
                             <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--color-text-muted)]" />
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-muted" />
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
-                                    className="input-field !pl-11 !pr-11"
+                                    className="input-field pl-11! pr-11!"
                                     required
                                     minLength={6}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)]"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-secondary"
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
@@ -144,7 +144,7 @@ function AuthContent() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="btn-primary w-full flex items-center justify-center gap-2 !mt-6"
+                            className="btn-primary w-full flex items-center justify-center gap-2 mt-6!"
                         >
                             {loading ? (
                                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -157,14 +157,14 @@ function AuthContent() {
                         </button>
                     </form>
 
-                    <div className="mt-6 text-center text-sm text-[var(--color-text-secondary)]">
+                    <div className="mt-6 text-center text-sm text-text-secondary">
                         {isRegister ? "Already have an account?" : "Don't have an account?"}{" "}
                         <button
                             onClick={() => {
                                 setIsRegister(!isRegister);
                                 setError("");
                             }}
-                            className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] font-medium"
+                            className="text-accent hover:text-accent-hover font-medium"
                         >
                             {isRegister ? "Sign In" : "Sign Up"}
                         </button>

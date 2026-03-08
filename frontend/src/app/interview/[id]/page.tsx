@@ -147,8 +147,8 @@ export default function InterviewChatPage() {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
-                    <div className="w-10 h-10 border-2 border-[var(--color-accent)]/30 border-t-[var(--color-accent)] rounded-full animate-spin mx-auto mb-3" />
-                    <p className="text-[var(--color-text-secondary)]">Loading interview...</p>
+                    <div className="w-10 h-10 border-2 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-3" />
+                    <p className="text-text-secondary">Loading interview...</p>
                 </div>
             </div>
         );
@@ -159,27 +159,27 @@ export default function InterviewChatPage() {
     const persona = personaNames[interview.difficulty] || personaNames.easy;
 
     return (
-        <div className="h-screen flex flex-col bg-[var(--color-bg-primary)]">
+        <div className="h-screen flex flex-col bg-bg-primary">
             {/* Top Bar */}
             <header className="glass px-6 py-3 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-4">
                     <Link
                         href="/dashboard"
-                        className="p-2 rounded-lg hover:bg-[var(--color-bg-card)] text-[var(--color-text-muted)]"
+                        className="p-2 rounded-lg hover:bg-bg-card text-text-muted"
                     >
                         <ArrowLeft className="w-5 h-5" />
                     </Link>
 
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center relative">
+                        <div className="w-10 h-10 rounded-full bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center relative">
                             <UserIcon className="w-5 h-5 text-white" />
                             {interview.status === "in_progress" && (
-                                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-[var(--color-bg-primary)]" />
+                                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full border-2 border-bg-primary" />
                             )}
                         </div>
                         <div>
                             <p className="font-semibold text-sm">{persona.name}</p>
-                            <p className="text-xs text-[var(--color-text-muted)]">
+                            <p className="text-xs text-text-muted">
                                 {persona.role} • {interview.job_title}
                             </p>
                         </div>
@@ -187,10 +187,10 @@ export default function InterviewChatPage() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+                    <div className="flex items-center gap-2 text-sm text-text-secondary">
                         <Clock className="w-4 h-4" />
                         <span className="font-mono">{formatTime(elapsedTime)}</span>
-                        <span className="text-[var(--color-text-muted)]">
+                        <span className="text-text-muted">
                             / {interview.duration_minutes}:00
                         </span>
                     </div>
@@ -222,7 +222,7 @@ export default function InterviewChatPage() {
                             className={`flex ${msg.role === "candidate" ? "justify-end" : "justify-start"}`}
                         >
                             {msg.role === "interviewer" && (
-                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mr-3 mt-1 shrink-0">
+                                <div className="w-8 h-8 rounded-full bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center mr-3 mt-1 shrink-0">
                                     <Sparkles className="w-4 h-4 text-white" />
                                 </div>
                             )}
@@ -246,14 +246,14 @@ export default function InterviewChatPage() {
                             animate={{ opacity: 1 }}
                             className="flex justify-start"
                         >
-                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center mr-3 mt-1 shrink-0">
+                            <div className="w-8 h-8 rounded-full bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center mr-3 mt-1 shrink-0">
                                 <Sparkles className="w-4 h-4 text-white" />
                             </div>
                             <div className="chat-bubble-interviewer">
                                 <div className="flex gap-1.5">
-                                    <div className="w-2 h-2 rounded-full bg-[var(--color-text-muted)] animate-bounce" style={{ animationDelay: "0ms" }} />
-                                    <div className="w-2 h-2 rounded-full bg-[var(--color-text-muted)] animate-bounce" style={{ animationDelay: "150ms" }} />
-                                    <div className="w-2 h-2 rounded-full bg-[var(--color-text-muted)] animate-bounce" style={{ animationDelay: "300ms" }} />
+                                    <div className="w-2 h-2 rounded-full bg-text-muted animate-bounce" style={{ animationDelay: "0ms" }} />
+                                    <div className="w-2 h-2 rounded-full bg-text-muted animate-bounce" style={{ animationDelay: "150ms" }} />
+                                    <div className="w-2 h-2 rounded-full bg-text-muted animate-bounce" style={{ animationDelay: "300ms" }} />
                                 </div>
                             </div>
                         </motion.div>
@@ -272,14 +272,14 @@ export default function InterviewChatPage() {
                         onChange={(e) => setInput(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="Type your answer... (Enter to send, Shift+Enter for new line)"
-                        className="input-field flex-1 resize-none min-h-[48px] max-h-[120px] !py-3"
+                        className="input-field flex-1 resize-none min-h-[48px] max-h-[120px] py-3!"
                         rows={1}
                         disabled={sending || interview.status !== "in_progress"}
                     />
                     <button
                         onClick={handleSend}
                         disabled={!input.trim() || sending}
-                        className="btn-primary !px-4 !py-3 self-end disabled:opacity-40"
+                        className="btn-primary px-4! py-3! self-end disabled:opacity-40"
                     >
                         <Send className="w-5 h-5" />
                     </button>

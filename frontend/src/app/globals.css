@@ -1,20 +1,32 @@
 @import "tailwindcss";
 
+/* ──────────────────────────────────────────────────────
+   Theme Tokens — Tailwind v4 native
+   Usage: bg-bg-primary, text-text-secondary, border-border, etc.
+   ────────────────────────────────────────────────────── */
 @theme {
-  /* Premium dark color palette */
+  /* Backgrounds */
   --color-bg-primary: #0a0a0f;
   --color-bg-secondary: #12121a;
   --color-bg-card: #1a1a2e;
   --color-bg-card-hover: #22223a;
   --color-bg-input: #16162a;
+
+  /* Borders */
   --color-border: #2a2a3e;
   --color-border-focus: #6c63ff;
+
+  /* Text */
   --color-text-primary: #f0f0f5;
   --color-text-secondary: #9090a8;
   --color-text-muted: #606078;
+
+  /* Brand */
   --color-accent: #6c63ff;
   --color-accent-hover: #7c73ff;
   --color-accent-glow: rgba(108, 99, 255, 0.3);
+
+  /* Status */
   --color-success: #34d399;
   --color-warning: #fbbf24;
   --color-danger: #f87171;
@@ -26,179 +38,163 @@
   --gradient-primary: linear-gradient(135deg, #6c63ff 0%, #a855f7 50%, #ec4899 100%);
   --gradient-card: linear-gradient(145deg, #1a1a2e 0%, #16162a 100%);
   --gradient-glow: radial-gradient(ellipse at center, rgba(108, 99, 255, 0.15) 0%, transparent 70%);
+
+  /* Animations */
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.5s ease-in-out infinite;
 }
 
-/* Custom scrollbar */
+/* ──────────────────────────────────────────────────────
+   Keyframes
+   ────────────────────────────────────────────────────── */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* ──────────────────────────────────────────────────────
+   Base Styles
+   ────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-secondary);
+  @apply bg-bg-secondary;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 3px;
+  @apply bg-border rounded-sm;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-text-muted);
+  @apply bg-text-muted;
 }
 
 body {
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
+  @apply bg-bg-primary text-text-primary;
   font-family: var(--font-geist-sans), system-ui, sans-serif;
 }
 
-/* Glass effect */
-.glass {
-  background: rgba(26, 26, 46, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
+/* ──────────────────────────────────────────────────────
+   Component Classes (using @apply for Tailwind awareness)
+   ────────────────────────────────────────────────────── */
 
-/* Glow effects */
-.glow-sm {
-  box-shadow: 0 0 15px var(--color-accent-glow);
-}
-.glow-md {
-  box-shadow: 0 0 30px var(--color-accent-glow);
-}
-.glow-text {
-  text-shadow: 0 0 20px var(--color-accent-glow);
+/* Glass morphism */
+@utility glass {
+  @apply backdrop-blur-xl border border-white/8;
+  background: rgba(26, 26, 46, 0.6);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Gradient text */
-.gradient-text {
+@utility gradient-text {
   background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Button styles */
-.btn-primary {
-  background: var(--gradient-primary);
-  color: white;
-  padding: 0.75rem 2rem;
-  border-radius: 12px;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px var(--color-accent-glow);
-}
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-secondary {
-  background: var(--color-bg-card);
-  color: var(--color-text-primary);
-  padding: 0.75rem 2rem;
-  border-radius: 12px;
-  font-weight: 600;
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.btn-secondary:hover {
-  background: var(--color-bg-card-hover);
-  border-color: var(--color-accent);
-}
-
-/* Input styles */
-.input-field {
-  background: var(--color-bg-input);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 0.875rem 1rem;
-  color: var(--color-text-primary);
-  font-size: 0.95rem;
-  width: 100%;
-  transition: all 0.3s ease;
-  outline: none;
-}
-.input-field:focus {
-  border-color: var(--color-border-focus);
-  box-shadow: 0 0 0 3px var(--color-accent-glow);
-}
-.input-field::placeholder {
-  color: var(--color-text-muted);
-}
-
-/* Card styles */
-.card {
-  background: var(--gradient-card);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  padding: 1.5rem;
-  transition: all 0.3s ease;
-}
-.card:hover {
-  border-color: rgba(108, 99, 255, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-}
-
-/* Chat bubbles */
-.chat-bubble-interviewer {
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
-  border-radius: 16px 16px 16px 4px;
-  padding: 1rem 1.25rem;
-  max-width: 80%;
-}
-.chat-bubble-candidate {
-  background: linear-gradient(135deg, #6c63ff 0%, #a855f7 100%);
-  border-radius: 16px 16px 4px 16px;
-  padding: 1rem 1.25rem;
-  max-width: 80%;
-  color: white;
-}
-
-/* Animated background dots */
-.bg-dots {
+/* Dot pattern background */
+@utility bg-dots {
   background-image: radial-gradient(rgba(108, 99, 255, 0.15) 1px, transparent 1px);
   background-size: 30px 30px;
 }
 
-/* Floating animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+/* Glow effects */
+@utility glow-sm {
+  box-shadow: 0 0 15px var(--color-accent-glow);
 }
 
-/* Pulse ring */
-@keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(1.5); opacity: 0; }
+@utility glow-md {
+  box-shadow: 0 0 30px var(--color-accent-glow);
 }
-.animate-pulse-ring::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border: 2px solid var(--color-accent);
-  border-radius: inherit;
-  animation: pulse-ring 2s ease-out infinite;
+
+@utility glow-text {
+  text-shadow: 0 0 20px var(--color-accent-glow);
+}
+
+/* Primary button */
+@utility btn-primary {
+  @apply relative overflow-hidden cursor-pointer rounded-xl px-8 py-3 font-semibold text-white border-none transition-all duration-300;
+  background: var(--gradient-primary);
+}
+
+/* Secondary button */
+@utility btn-secondary {
+  @apply bg-bg-card text-text-primary rounded-xl px-8 py-3 font-semibold border border-border cursor-pointer transition-all duration-300 hover:bg-bg-card-hover hover:border-accent;
+}
+
+/* Input field */
+@utility input-field {
+  @apply bg-bg-input border border-border rounded-xl py-3.5 px-4 text-text-primary text-[0.95rem] w-full transition-all duration-300 outline-none placeholder:text-text-muted focus:border-border-focus focus:ring-3 focus:ring-accent-glow;
+}
+
+/* Card */
+@utility card {
+  @apply rounded-2xl p-6 border border-border transition-all duration-300 hover:border-accent/30 hover:-translate-y-0.5 hover:shadow-[0_8px_30px_#0000004d];
+  background: var(--gradient-card);
+}
+
+/* Chat bubbles */
+@utility chat-bubble-interviewer {
+  @apply bg-bg-card border border-border rounded-2xl rounded-bl-sm py-4 px-5 max-w-[80%];
+}
+
+@utility chat-bubble-candidate {
+  @apply rounded-2xl rounded-br-sm py-4 px-5 max-w-[80%] text-white;
+  background: linear-gradient(135deg, #6c63ff 0%, #a855f7 100%);
 }
 
 /* Skeleton loader */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.skeleton {
+@utility skeleton {
+  @apply rounded-lg animate-shimmer;
   background: linear-gradient(90deg, var(--color-bg-card) 25%, var(--color-bg-card-hover) 50%, var(--color-bg-card) 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.5s ease-in-out infinite;
-  border-radius: 8px;
+}
+
+/* Pulse ring animation */
+.animate-pulse-ring::before {
+  content: '';
+  @apply absolute -inset-1 border-2 border-accent rounded-[inherit];
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+/* Primary button hover/active states */
+.btn-primary:hover {
+  @apply -translate-y-0.5;
+  box-shadow: 0 8px 30px var(--color-accent-glow);
+}
+
+.btn-primary:active {
+  @apply translate-y-0;
 }

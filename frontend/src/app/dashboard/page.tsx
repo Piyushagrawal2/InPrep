@@ -65,7 +65,7 @@ export default function DashboardPage() {
     if (isLoading || !user) {
         return (
             <div className="min-h-screen flex items-center justify-center">
-                <div className="w-8 h-8 border-2 border-[var(--color-accent)]/30 border-t-[var(--color-accent)] rounded-full animate-spin" />
+                <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
             </div>
         );
     }
@@ -83,22 +83,22 @@ export default function DashboardPage() {
             <header className="glass sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                     <Link href="/dashboard" className="flex items-center gap-2">
-                        <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+                        <div className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
                             <Sparkles className="w-4.5 h-4.5 text-white" />
                         </div>
                         <span className="text-lg font-bold gradient-text">InPrep</span>
                     </Link>
 
                     <div className="flex items-center gap-4">
-                        <span className="text-sm text-[var(--color-text-secondary)]">
-                            Hey, <strong className="text-[var(--color-text-primary)]">{user.name}</strong>
+                        <span className="text-sm text-text-secondary">
+                            Hey, <strong className="text-text-primary">{user.name}</strong>
                         </span>
                         <button
                             onClick={() => {
                                 logout();
                                 router.push("/");
                             }}
-                            className="p-2 rounded-lg hover:bg-[var(--color-bg-card)] transition-colors text-[var(--color-text-muted)]"
+                            className="p-2 rounded-lg hover:bg-bg-card transition-colors text-text-muted"
                         >
                             <LogOut className="w-5 h-5" />
                         </button>
@@ -111,7 +111,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
                     <div>
                         <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
-                        <p className="text-[var(--color-text-secondary)]">
+                        <p className="text-text-secondary">
                             Track your interview practice and improvements
                         </p>
                     </div>
@@ -136,7 +136,7 @@ export default function DashboardPage() {
                         </div>
                         <div>
                             <p className="text-2xl font-bold">{interviews.length}</p>
-                            <p className="text-sm text-[var(--color-text-secondary)]">
+                            <p className="text-sm text-text-secondary">
                                 Total Interviews
                             </p>
                         </div>
@@ -155,7 +155,7 @@ export default function DashboardPage() {
                             <p className="text-2xl font-bold">
                                 {avgScore > 0 ? avgScore.toFixed(1) : "—"}
                             </p>
-                            <p className="text-sm text-[var(--color-text-secondary)]">
+                            <p className="text-sm text-text-secondary">
                                 Avg Score
                             </p>
                         </div>
@@ -172,7 +172,7 @@ export default function DashboardPage() {
                         </div>
                         <div>
                             <p className="text-2xl font-bold">{completedInterviews.length}</p>
-                            <p className="text-sm text-[var(--color-text-secondary)]">
+                            <p className="text-sm text-text-secondary">
                                 Completed
                             </p>
                         </div>
@@ -193,15 +193,15 @@ export default function DashboardPage() {
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="card !py-16 text-center"
+                            className="card py-16! text-center"
                         >
-                            <div className="w-16 h-16 rounded-2xl bg-[var(--color-bg-card-hover)] flex items-center justify-center mx-auto mb-4">
-                                <Sparkles className="w-8 h-8 text-[var(--color-text-muted)]" />
+                            <div className="w-16 h-16 rounded-2xl bg-bg-card-hover flex items-center justify-center mx-auto mb-4">
+                                <Sparkles className="w-8 h-8 text-text-muted" />
                             </div>
                             <h3 className="text-lg font-semibold mb-2">
                                 No interviews yet
                             </h3>
-                            <p className="text-[var(--color-text-secondary)] mb-6">
+                            <p className="text-text-secondary mb-6">
                                 Start your first AI interview and get personalized feedback
                             </p>
                             <Link href="/interview/new" className="btn-primary inline-flex items-center gap-2">
@@ -225,10 +225,10 @@ export default function DashboardPage() {
                                                     ? `/interview/${interview.id}/summary`
                                                     : `/interview/${interview.id}`
                                         }
-                                        className="card flex items-center justify-between !py-4 group"
+                                        className="card flex items-center justify-between py-4! group"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 flex items-center justify-center">
+                                            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-violet-500/20 to-purple-500/20 flex items-center justify-center">
                                                 <Target className="w-5 h-5 text-violet-400" />
                                             </div>
                                             <div>
@@ -240,7 +240,7 @@ export default function DashboardPage() {
                                                     >
                                                         {interview.difficulty}
                                                     </span>
-                                                    <span className="text-xs text-[var(--color-text-muted)] flex items-center gap-1">
+                                                    <span className="text-xs text-text-muted flex items-center gap-1">
                                                         <Clock className="w-3 h-3" />{" "}
                                                         {interview.duration_minutes} min
                                                     </span>
@@ -254,7 +254,7 @@ export default function DashboardPage() {
                                                     <p className="text-lg font-bold gradient-text">
                                                         {interview.overall_score.toFixed(1)}
                                                     </p>
-                                                    <p className="text-xs text-[var(--color-text-muted)]">
+                                                    <p className="text-xs text-text-muted">
                                                         Score
                                                     </p>
                                                 </div>
@@ -265,7 +265,7 @@ export default function DashboardPage() {
                                             >
                                                 {interview.status.replace("_", " ")}
                                             </span>
-                                            <ChevronRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors" />
+                                            <ChevronRight className="w-5 h-5 text-text-muted group-hover:text-accent transition-colors" />
                                         </div>
                                     </Link>
                                 </motion.div>

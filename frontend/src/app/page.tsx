@@ -69,7 +69,7 @@ export default function LandingPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold gradient-text">InPrep</span>
@@ -77,11 +77,11 @@ export default function LandingPage() {
           <div className="flex items-center gap-4">
             <Link
               href="/auth"
-              className="text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] transition-colors font-medium"
+              className="text-text-secondary hover:text-text-primary transition-colors font-medium"
             >
               Sign In
             </Link>
-            <Link href="/auth?mode=register" className="btn-primary text-sm !py-2.5 !px-5">
+            <Link href="/auth?mode=register" className="btn-primary text-sm py-2.5! px-5!">
               Get Started Free
             </Link>
           </div>
@@ -100,7 +100,7 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-[var(--color-text-secondary)] mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-text-secondary mb-8">
               <Star className="w-4 h-4 text-yellow-400" fill="currentColor" />
               <span>The most realistic AI interview platform</span>
             </div>
@@ -111,17 +111,17 @@ export default function LandingPage() {
               <span className="gradient-text">impossibly real</span>
             </h1>
 
-            <p className="text-lg md:text-xl text-[var(--color-text-secondary)] max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
               Practice with AI interviewers who have personalities, ask
               follow-ups, and push back on your answers. Upload your resume, pick
               your role, and experience interviews that actually prepare you.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/auth?mode=register" className="btn-primary text-lg !py-4 !px-8 flex items-center gap-2 justify-center">
+              <Link href="/auth?mode=register" className="btn-primary text-lg py-4! px-8! flex items-center gap-2 justify-center">
                 Start Your First Interview <ArrowRight className="w-5 h-5" />
               </Link>
-              <button className="btn-secondary text-lg !py-4 !px-8 flex items-center gap-2 justify-center">
+              <button className="btn-secondary text-lg py-4! px-8! flex items-center gap-2 justify-center">
                 <Shield className="w-5 h-5" /> No credit card required
               </button>
             </div>
@@ -139,7 +139,7 @@ export default function LandingPage() {
                 <div className="text-3xl font-bold gradient-text mb-1">
                   {stat.value}
                 </div>
-                <div className="text-sm text-[var(--color-text-secondary)]">
+                <div className="text-sm text-text-secondary">
                   {stat.label}
                 </div>
               </div>
@@ -156,7 +156,7 @@ export default function LandingPage() {
               Everything you need to{" "}
               <span className="gradient-text">ace your interview</span>
             </h2>
-            <p className="text-[var(--color-text-secondary)] text-lg max-w-2xl mx-auto">
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto">
               From resume-aware questioning to live coding challenges — InPrep
               covers every aspect of modern technical interviews.
             </p>
@@ -173,12 +173,12 @@ export default function LandingPage() {
                 className="card group cursor-pointer"
               >
                 <div
-                  className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
+                  className={`w-12 h-12 rounded-xl bg-linear-to-br ${feature.gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}
                 >
                   <feature.icon className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-                <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">
+                <p className="text-text-secondary text-sm leading-relaxed">
                   {feature.desc}
                 </p>
               </motion.div>
@@ -224,7 +224,7 @@ export default function LandingPage() {
                   {item.step}
                 </div>
                 <h3 className="text-xl font-semibold mb-3">{item.title}</h3>
-                <p className="text-[var(--color-text-secondary)] leading-relaxed">
+                <p className="text-text-secondary leading-relaxed">
                   {item.desc}
                 </p>
               </motion.div>
@@ -236,18 +236,18 @@ export default function LandingPage() {
       {/* CTA */}
       <section className="py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="card !p-12 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-purple-600/10" />
+          <div className="card p-12! relative overflow-hidden">
+            <div className="absolute inset-0 bg-linear-to-br from-violet-600/10 to-purple-600/10" />
             <div className="relative z-10">
-              <Users className="w-12 h-12 text-[var(--color-accent)] mx-auto mb-6" />
+              <Users className="w-12 h-12 text-accent mx-auto mb-6" />
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 Your dream job is one interview away
               </h2>
-              <p className="text-[var(--color-text-secondary)] text-lg mb-8 max-w-xl mx-auto">
+              <p className="text-text-secondary text-lg mb-8 max-w-xl mx-auto">
                 Join thousands of candidates who improved their interview
                 performance by 35% with InPrep.
               </p>
-              <Link href="/auth?mode=register" className="btn-primary text-lg !py-4 !px-10 inline-flex items-center gap-2">
+              <Link href="/auth?mode=register" className="btn-primary text-lg py-4! px-10! inline-flex items-center gap-2">
                 Start Practicing Now <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -256,15 +256,15 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-6 border-t border-[var(--color-border)]">
+      <footer className="py-8 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
               <Sparkles className="w-4 h-4 text-white" />
             </div>
             <span className="font-bold gradient-text">InPrep</span>
           </div>
-          <p className="text-[var(--color-text-muted)] text-sm">
+          <p className="text-text-muted text-sm">
             © 2026 InPrep. Built with ❤️ for job seekers everywhere.
           </p>
         </div>
