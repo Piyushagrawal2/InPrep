@@ -1,0 +1,49 @@
+services:
+  # ──────────────────────────────────────
+  # FastAPI Backend
+  # ──────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: inprep-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app # Hot-reload: mount source code
+      - backend-uploads:/app/uploads
+    env_file:
+      - ./backend/.env
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./inprep.db
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ──────────────────────────────────────
+  # Next.js Frontend
+  # ──────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: inprep-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src # Hot-reload: mount src directory
+      - ./frontend/public:/app/public
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+      - NEXT_TELEMETRY_DISABLED=1
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  backend-uploads:
