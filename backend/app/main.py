@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.core.config import settings
-from app.core.database import init_db
+from app.helpers.config import settings
+from app.helpers.database import init_db
 from app.api.routes import auth, interviews
 
 

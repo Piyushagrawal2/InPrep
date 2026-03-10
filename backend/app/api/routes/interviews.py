@@ -4,8 +4,8 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc
-from app.core.database import get_db
-from app.core.config import settings
+from app.helpers.database import get_db
+from app.helpers.config import settings
 from app.models.models import User, Interview, InterviewMessage, InterviewStatus
 from app.schemas.schemas import (
     InterviewCreate, InterviewResponse, InterviewListResponse,
