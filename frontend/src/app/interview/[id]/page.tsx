@@ -116,7 +116,7 @@ export default function InterviewChatPage() {
             // Add the AI response
             setMessages((prev) => [...prev, response]);
         } catch (err) {
-            console.error("Failed to send message:", err);
+            console.error("Failed to send message:", err instanceof Error ? err.message : String(err));
         } finally {
             setSending(false);
             inputRef.current?.focus();
@@ -131,7 +131,7 @@ export default function InterviewChatPage() {
             await interviewAPI.end(token, interviewId);
             router.push(`/interview/${interviewId}/summary`);
         } catch (err) {
-            console.error("Failed to end interview:", err);
+            console.error("Failed to end interview:", err instanceof Error ? err.message : String(err));
             setEnding(false);
         }
     };

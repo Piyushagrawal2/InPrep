@@ -57,7 +57,7 @@ export default function DashboardPage() {
             interviewAPI
                 .list(token)
                 .then((data) => setInterviews(data.interviews))
-                .catch(console.error)
+                .catch((err) => console.error(err instanceof Error ? err.message : String(err)))
                 .finally(() => setLoading(false));
         }
     }, [token]);
