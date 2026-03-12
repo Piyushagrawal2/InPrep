@@ -4,14 +4,16 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
-    Plus,
+    CheckCircle2,
     Clock,
-    BarChart3,
-    Sparkles,
-    LogOut,
-    ChevronRight,
+    Plus,
     Target,
     Zap,
+    LogOut,
+    ChevronRight,
+    Sparkles,
+    BarChart3,
+    ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
@@ -64,8 +66,8 @@ export default function DashboardPage() {
 
     if (isLoading || !user) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
+            <div className="min-h-screen bg-bg-primary flex items-center justify-center">
+                <div className="w-12 h-12 border-2 border-accent/20 border-t-accent rounded-full animate-spin shadow-glow" />
             </div>
         );
     }
@@ -78,29 +80,34 @@ export default function DashboardPage() {
             : 0;
 
     return (
-        <div className="min-h-screen bg-dots">
+        <div className="min-h-screen bg-mesh">
             {/* Header */}
-            <header className="glass sticky top-0 z-50">
-                <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/dashboard" className="flex items-center gap-2">
-                        <div className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
-                            <Sparkles className="w-4.5 h-4.5 text-white" />
+            <header className="glass sticky top-0 z-50 border-b border-white/5">
+                <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+                    <Link href="/dashboard" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-2xl bg-accent flex items-center justify-center p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+                             <div className="w-full h-full bg-bg-primary rounded-[inherit] flex items-center justify-center">
+                                <Sparkles className="w-5 h-5 text-accent" />
+                             </div>
                         </div>
-                        <span className="text-lg font-bold gradient-text">InPrep</span>
+                        <span className="text-xl font-black tracking-tight gradient-text">InPrep</span>
                     </Link>
 
-                    <div className="flex items-center gap-4">
-                        <span className="text-sm text-text-secondary">
-                            Hey, <strong className="text-text-primary">{user.name}</strong>
-                        </span>
+                    <div className="flex items-center gap-6">
+                        <div className="hidden sm:flex flex-col items-end">
+                            <span className="text-xs font-bold uppercase tracking-widest text-text-muted">Candidate</span>
+                            <span className="text-sm font-bold text-white">{user.name}</span>
+                        </div>
+                        <div className="w-px h-8 bg-white/10 hidden sm:block" />
                         <button
                             onClick={() => {
                                 logout();
                                 router.push("/");
                             }}
-                            className="p-2 rounded-lg hover:bg-bg-card transition-colors text-text-muted"
+                            className="p-2.5 rounded-xl glass hover:bg-white/5 transition-all text-text-muted hover:text-rose-400 group border-white/5 hover:border-rose-500/30"
+                            title="Logout"
                         >
-                            <LogOut className="w-5 h-5" />
+                            <LogOut className="w-5 h-5 group-hover:scale-110 transition-transform" />
                         </button>
                     </div>
                 </div>
@@ -108,113 +115,117 @@ export default function DashboardPage() {
 
             <main className="max-w-7xl mx-auto px-6 py-8">
                 {/* Welcome + New Interview */}
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
+                <div className="flex flex-col md:flex-row items-end md:items-center justify-between gap-8 mb-16">
                     <div>
-                        <h1 className="text-3xl font-bold mb-1">Dashboard</h1>
-                        <p className="text-text-secondary">
-                            Track your interview practice and improvements
+                        <h1 className="text-3xl md:text-4xl font-black mb-2 tracking-tighter">Your <span className="gradient-text">Dashboard</span></h1>
+                        <p className="text-text-secondary text-base font-medium">
+                            The command center for your career growth.
                         </p>
                     </div>
                     <Link
                         href="/interview/new"
-                        className="btn-primary flex items-center gap-2"
+                        className="btn-primary group shadow-2xl"
                     >
-                        <Plus className="w-5 h-5" /> New Interview
+                        <div className="w-5 h-5 rounded-lg bg-white/20 flex items-center justify-center group-hover:rotate-90 transition-transform">
+                             <Plus className="w-3 h-3 text-white" />
+                        </div>
+                        Start Interview
                     </Link>
                 </div>
 
                 {/* Stats Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0 }}
-                        className="card flex items-center gap-4"
+                        className="card p-6 group border-glow shimmer-effect"
                     >
-                        <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center">
-                            <Target className="w-6 h-6 text-violet-400" />
+                        <div className="flex items-start justify-between mb-3">
+                            <div className="w-12 h-12 rounded-xl bg-violet-500/10 flex items-center justify-center border border-violet-500/20">
+                                <Target className="w-6 h-6 text-violet-400" />
+                            </div>
+                            <span className="text-[10px] font-bold py-1 px-2.5 rounded-full bg-white/5 text-text-muted">Lifetime</span>
                         </div>
-                        <div>
-                            <p className="text-2xl font-bold">{interviews.length}</p>
-                            <p className="text-sm text-text-secondary">
-                                Total Interviews
-                            </p>
-                        </div>
+                        <h3 className="text-3xl font-black mb-1 leading-none">{interviews.length}</h3>
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">Total Interviews</p>
                     </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="card flex items-center gap-4"
+                        className="card p-6 group border-glow shimmer-effect"
                     >
-                        <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center">
-                            <BarChart3 className="w-6 h-6 text-emerald-400" />
+                        <div className="flex items-start justify-between mb-3">
+                            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                                <BarChart3 className="w-6 h-6 text-emerald-400" />
+                            </div>
+                            <span className="text-[10px] font-bold py-1 px-2.5 rounded-full bg-emerald-500/10 text-emerald-400">Mastery</span>
                         </div>
-                        <div>
-                            <p className="text-2xl font-bold">
-                                {avgScore > 0 ? avgScore.toFixed(1) : "—"}
-                            </p>
-                            <p className="text-sm text-text-secondary">
-                                Avg Score
-                            </p>
-                        </div>
+                        <h3 className="text-3xl font-black mb-1 leading-none gradient-text">
+                            {avgScore > 0 ? avgScore.toFixed(1) : "0.0"}
+                        </h3>
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">Average Performance</p>
                     </motion.div>
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="card flex items-center gap-4"
+                        className="card p-6 group border-glow shimmer-effect"
                     >
-                        <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <Zap className="w-6 h-6 text-amber-400" />
+                        <div className="flex items-start justify-between mb-3">
+                            <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20">
+                                <Zap className="w-6 h-6 text-amber-400" />
+                            </div>
+                            <span className="text-[10px] font-bold py-1 px-2.5 rounded-full bg-white/5 text-text-muted">Volume</span>
                         </div>
-                        <div>
-                            <p className="text-2xl font-bold">{completedInterviews.length}</p>
-                            <p className="text-sm text-text-secondary">
-                                Completed
-                            </p>
-                        </div>
+                        <h3 className="text-3xl font-black mb-1 leading-none">{completedInterviews.length}</h3>
+                        <p className="text-[11px] font-bold uppercase tracking-widest text-text-muted">Sessions Completed</p>
                     </motion.div>
                 </div>
 
                 {/* Interview History */}
-                <div>
-                    <h2 className="text-xl font-semibold mb-4">Interview History</h2>
+                <div className="relative">
+                    <div className="flex items-center justify-between mb-8 px-2">
+                        <h2 className="text-2xl font-black tracking-tight">Recent <span className="gradient-text">History</span></h2>
+                        <div className="flex items-center gap-2 text-xs font-bold text-text-muted">
+                           <Clock className="w-4 h-4" /> Updated just now
+                        </div>
+                    </div>
 
                     {loading ? (
-                        <div className="space-y-4">
+                        <div className="grid gap-4">
                             {[...Array(3)].map((_, i) => (
-                                <div key={i} className="skeleton h-20 w-full" />
+                                <div key={i} className="glass h-24 w-full rounded-3xl animate-pulse" />
                             ))}
                         </div>
                     ) : interviews.length === 0 ? (
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
-                            className="card py-16! text-center"
+                            className="card py-24! text-center border-dashed border-white/10"
                         >
-                            <div className="w-16 h-16 rounded-2xl bg-bg-card-hover flex items-center justify-center mx-auto mb-4">
-                                <Sparkles className="w-8 h-8 text-text-muted" />
+                            <div className="w-20 h-20 rounded-[2.5rem] bg-indigo-500/10 flex items-center justify-center mx-auto mb-6 border border-indigo-500/20">
+                                <Sparkles className="w-10 h-10 text-indigo-400" />
                             </div>
-                            <h3 className="text-lg font-semibold mb-2">
-                                No interviews yet
+                            <h3 className="text-2xl font-black mb-3">
+                                Your journey starts here
                             </h3>
-                            <p className="text-text-secondary mb-6">
-                                Start your first AI interview and get personalized feedback
+                            <p className="text-text-secondary mb-10 max-w-sm mx-auto font-medium">
+                                Take your first step toward mastery by starting an AI-led practice session.
                             </p>
-                            <Link href="/interview/new" className="btn-primary inline-flex items-center gap-2">
-                                <Plus className="w-5 h-5" /> Create Your First Interview
+                            <Link href="/interview/new" className="btn-primary inline-flex items-center gap-3">
+                                Create First Interview Session <ArrowRight className="w-5 h-5" />
                             </Link>
                         </motion.div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="grid gap-6">
                             {interviews.map((interview, i) => (
                                 <motion.div
                                     key={interview.id}
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: i * 0.05 }}
                                 >
                                     <Link
@@ -225,47 +236,45 @@ export default function DashboardPage() {
                                                     ? `/interview/${interview.id}/summary`
                                                     : `/interview/${interview.id}`
                                         }
-                                        className="card flex items-center justify-between py-4! group"
+                                        className="card p-5! group border-glow flex flex-col sm:flex-row sm:items-center justify-between gap-6"
                                     >
                                         <div className="flex items-center gap-4">
-                                            <div className="w-10 h-10 rounded-xl bg-linear-to-br from-violet-500/20 to-purple-500/20 flex items-center justify-center">
-                                                <Target className="w-5 h-5 text-violet-400" />
-                                            </div>
+                                        <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-violet-500/20 to-purple-600/20 flex items-center justify-center border border-white/5">
+                                            <Sparkles className="w-6 h-6 text-accent" />
+                                        </div>
                                             <div>
-                                                <p className="font-semibold">{interview.job_title}</p>
-                                                <div className="flex items-center gap-3 mt-1">
-                                                    <span
-                                                        className={`text-xs px-2 py-0.5 rounded-full border ${difficultyColor[interview.difficulty]
-                                                            }`}
-                                                    >
+                                                <p className="text-xl font-bold group-hover:text-accent transition-colors">{interview.job_title}</p>
+                                                <div className="flex items-center gap-3 mt-1.5">
+                                                    <span className={`badge ${difficultyColor[interview.difficulty]}`}>
                                                         {interview.difficulty}
                                                     </span>
-                                                    <span className="text-xs text-text-muted flex items-center gap-1">
-                                                        <Clock className="w-3 h-3" />{" "}
-                                                        {interview.duration_minutes} min
+                                                    <span className="text-xs font-bold text-text-muted flex items-center gap-1.5">
+                                                        <Clock className="w-3.5 h-3.5" />
+                                                        {interview.duration_minutes}m Duration
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-center gap-4">
+                                        <div className="flex items-center justify-between sm:justify-end gap-10 border-t sm:border-t-0 border-white/5 pt-4 sm:pt-0">
                                             {interview.overall_score && (
-                                                <div className="text-right mr-2">
-                                                    <p className="text-lg font-bold gradient-text">
+                                                <div className="text-right">
+                                                    <p className="text-2xl font-black gradient-text leading-none mb-1">
                                                         {interview.overall_score.toFixed(1)}
                                                     </p>
-                                                    <p className="text-xs text-text-muted">
-                                                        Score
+                                                    <p className="text-[10px] font-black uppercase tracking-widest text-text-muted">
+                                                        Final Score
                                                     </p>
                                                 </div>
                                             )}
-                                            <span
-                                                className={`text-xs px-3 py-1 rounded-full ${statusColor[interview.status]
-                                                    }`}
-                                            >
-                                                {interview.status.replace("_", " ")}
-                                            </span>
-                                            <ChevronRight className="w-5 h-5 text-text-muted group-hover:text-accent transition-colors" />
+                                            <div className="flex items-center gap-4">
+                                                <span className={`badge uppercase tracking-tighter ${statusColor[interview.status]}`}>
+                                                    {interview.status.replace("_", " ")}
+                                                </span>
+                                                <div className="w-10 h-10 rounded-full glass flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-all">
+                                                    <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                                                </div>
+                                            </div>
                                         </div>
                                     </Link>
                                 </motion.div>
@@ -277,3 +286,4 @@ export default function DashboardPage() {
         </div>
     );
 }
+

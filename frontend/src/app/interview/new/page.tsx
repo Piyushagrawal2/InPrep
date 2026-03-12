@@ -72,7 +72,6 @@ export default function NewInterviewPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
-    // Form data
     const [jobTitle, setJobTitle] = useState("");
     const [jobDescription, setJobDescription] = useState("");
     const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -82,16 +81,11 @@ export default function NewInterviewPage() {
 
     const canProceed = () => {
         switch (step) {
-            case 1:
-                return jobTitle.trim().length > 0;
-            case 2:
-                return resumeFile !== null; // Resume is required
-            case 3:
-                return selfIntro.trim().length > 0; // Self-intro is required
-            case 4:
-                return true;
-            default:
-                return false;
+            case 1: return jobTitle.trim().length > 0;
+            case 2: return resumeFile !== null;
+            case 3: return selfIntro.trim().length > 0;
+            case 4: return true;
+            default: return false;
         }
     };
 
@@ -101,7 +95,6 @@ export default function NewInterviewPage() {
         setError("");
 
         try {
-            // 1. Create interview
             const interview = await interviewAPI.create(token, {
                 job_title: jobTitle,
                 job_description: jobDescription || undefined,
@@ -109,16 +102,8 @@ export default function NewInterviewPage() {
                 difficulty,
                 duration_minutes: duration,
             });
-
-            // 2. Upload resume if provided
-            if (resumeFile) {
-                await interviewAPI.uploadResume(token, interview.id, resumeFile);
-            }
-
-            // 3. Start interview (AI sends first message)
+            if (resumeFile) await interviewAPI.uploadResume(token, interview.id, resumeFile);
             await interviewAPI.start(token, interview.id);
-
-            // 4. Navigate to interview chat
             router.push(`/interview/${interview.id}`);
         } catch (err: unknown) {
             setError(err instanceof Error ? err.message : "Failed to create interview");
@@ -127,298 +112,258 @@ export default function NewInterviewPage() {
     };
 
     return (
-        <div className="min-h-screen bg-dots">
+        <div className="min-h-screen bg-mesh selection:bg-accent/30">
             {/* Header */}
-            <header className="glass sticky top-0 z-50">
-                <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-                    <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer">
-                        <div className="w-9 h-9 rounded-xl bg-linear-to-br from-violet-500 to-purple-600 flex items-center justify-center">
-                            <Sparkles className="w-4.5 h-4.5 text-white" />
+            <header className="glass sticky top-0 z-50 border-b border-white/5">
+                <div className="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
+                    <Link href="/dashboard" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 rounded-2xl bg-accent flex items-center justify-center p-0.5 shadow-lg group-hover:scale-105 transition-transform">
+                             <div className="w-full h-full bg-bg-primary rounded-[inherit] flex items-center justify-center">
+                                <Sparkles className="w-5 h-5 text-accent" />
+                             </div>
                         </div>
-                        <span className="text-lg font-bold gradient-text">InPrep</span>
+                        <span className="text-xl font-black tracking-tight gradient-text font-serif">InPrep</span>
                     </Link>
                     <Link
                         href="/dashboard"
-                        className="text-sm text-text-secondary hover:text-text-primary"
+                        className="text-sm font-bold uppercase tracking-widest text-text-muted hover:text-white transition-colors"
                     >
-                        Cancel
+                        Cancel Session
                     </Link>
                 </div>
             </header>
 
-            <main className="max-w-2xl mx-auto px-6 py-10">
-                {/* Step indicator */}
-                <div className="flex items-center justify-center gap-2 mb-10">
-                    {steps.map((s, i) => (
-                        <div key={s.id} className="flex items-center gap-2">
-                            <button
-                                onClick={() => s.id < step && setStep(s.id)}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-medium transition-all ${step === s.id
-                                    ? "bg-accent/15 text-accent"
-                                    : step > s.id
-                                        ? "text-emerald-400"
-                                        : "text-text-muted"
+            <main className="max-w-3xl mx-auto px-6 py-16">
+                {/* Progress Steps */}
+                <div className="relative mb-20 px-4">
+                    <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/5 -translate-y-1/2" />
+                    <div className="relative flex justify-between">
+                        {steps.map((s, i) => (
+                            <div key={s.id} className="flex flex-col items-center">
+                                <button
+                                    onClick={() => s.id < step && setStep(s.id)}
+                                    className={`w-12 h-12 rounded-2xl flex items-center justify-center relative z-10 transition-all duration-500 border ${
+                                        step === s.id
+                                            ? "bg-accent text-white scale-125 shadow-glow border-accent"
+                                            : step > s.id
+                                                ? "bg-emerald-500 text-white border-emerald-500"
+                                                : "bg-bg-secondary text-text-muted border-white/10"
                                     }`}
-                            >
-                                {step > s.id ? (
-                                    <CheckCircle2 className="w-4 h-4" />
-                                ) : (
-                                    <s.icon className="w-4 h-4" />
-                                )}
-                                <span className="hidden sm:inline">{s.label}</span>
-                            </button>
-                            {i < steps.length - 1 && (
-                                <div
-                                    className={`w-8 h-px ${step > s.id
-                                        ? "bg-emerald-400"
-                                        : "bg-border"
-                                        }`}
-                                />
-                            )}
-                        </div>
-                    ))}
+                                >
+                                    {step > s.id ? (
+                                        <CheckCircle2 className="w-6 h-6" />
+                                    ) : (
+                                        <s.icon className="w-5 h-5" />
+                                    )}
+                                </button>
+                                <span className={`absolute -bottom-8 text-[10px] font-black uppercase tracking-widest whitespace-nowrap transition-colors duration-300 ${step === s.id ? "text-accent" : "text-text-muted"}`}>
+                                    {s.label}
+                                </span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 {error && (
-                    <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
-                        {error}
-                    </div>
-                )}
-
-                {/* Step 1: Job Title */}
-                {step === 1 && (
-                    <motion.div
-                        key="step1"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="mb-8 p-5 rounded-3xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm font-bold flex items-center gap-3 shadow-xl"
                     >
-                        <h2 className="text-2xl font-bold mb-2">
-                            What role are you interviewing for?
-                        </h2>
-                        <p className="text-text-secondary mb-8">
-                            We&apos;ll tailor the entire interview to this position
-                        </p>
-
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-medium text-text-secondary mb-1.5">
-                                    Job Title *
-                                </label>
-                                <input
-                                    type="text"
-                                    value={jobTitle}
-                                    onChange={(e) => setJobTitle(e.target.value)}
-                                    placeholder="e.g. Senior Frontend Engineer"
-                                    className="input-field text-lg"
-                                    autoFocus
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium text-text-secondary mb-1.5">
-                                    Job Description{" "}
-                                    <span className="text-text-muted">(optional)</span>
-                                </label>
-                                <textarea
-                                    value={jobDescription}
-                                    onChange={(e) => setJobDescription(e.target.value)}
-                                    placeholder="Paste the job description for more targeted questions..."
-                                    className="input-field min-h-[120px] resize-none"
-                                    rows={4}
-                                />
-                            </div>
-                        </div>
+                        <Zap className="w-5 h-5" /> {error}
                     </motion.div>
                 )}
 
-                {/* Step 2: Resume */}
-                {step === 2 && (
+                <div className="min-h-[400px]">
                     <motion.div
-                        key="step2"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
+                        key={step}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
                     >
-                        <h2 className="text-2xl font-bold mb-2">Upload your resume *</h2>
-                        <p className="text-text-secondary mb-8">
-                            We need your resume to tailor the interview questions
-                        </p>
+                        {step === 1 && (
+                            <div className="space-y-8">
+                                <div className="text-center md:text-left">
+                                    <h2 className="text-4xl font-black mb-3 tracking-tighter">What role are we <span className="gradient-text">conquering?</span></h2>
+                                    <p className="text-text-secondary text-lg font-medium">Precision matters. We&apos;ll build the interview around your target.</p>
+                                </div>
+                                <div className="space-y-6">
+                                    <div className="group">
+                                        <label className="block text-xs font-black uppercase tracking-widest text-text-muted mb-3 ml-1 group-focus-within:text-accent transition-colors">Job Title</label>
+                                        <input
+                                            type="text"
+                                            value={jobTitle}
+                                            onChange={(e) => setJobTitle(e.target.value)}
+                                            placeholder="e.g. Senior Principal Architect"
+                                            className="input-field text-base w-full border-glow"
+                                            autoFocus
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-black uppercase tracking-widest text-text-muted mb-3 ml-1">Job Description <span className="text-text-muted/50 font-medium lowercase italic">(for hyper-realistic questions)</span></label>
+                                        <textarea
+                                            value={jobDescription}
+                                            onChange={(e) => setJobDescription(e.target.value)}
+                                            placeholder="Paste the requirements or key responsibilities here..."
+                                            className="input-field min-h-[160px] text-base resize-none w-full border-glow"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
-                        <div
-                            className={`card p-8! border-2 border-dashed text-center cursor-pointer transition-all ${resumeFile
-                                ? "border-emerald-400/50 bg-emerald-400/5"
-                                : "border-border hover:border-accent/50"
-                                }`}
-                            onClick={() => document.getElementById("resume-input")?.click()}
-                        >
-                            <input
-                                id="resume-input"
-                                type="file"
-                                accept=".pdf,.docx"
-                                className="hidden"
-                                onChange={(e) => {
-                                    const file = e.target.files?.[0];
-                                    if (file) setResumeFile(file);
-                                }}
-                            />
+                        {step === 2 && (
+                            <div className="space-y-8">
+                                <div className="text-center md:text-left">
+                                    <h2 className="text-4xl font-black mb-3 tracking-tighter">Your <span className="gradient-text">Professional Record</span></h2>
+                                    <p className="text-text-secondary text-lg font-medium">The AI analyzes your trajectory to ask the deep-dive questions.</p>
+                                </div>
+                                <div
+                                    className={`card p-16! border-2 border-dashed text-center cursor-pointer group transition-all duration-500 relative overflow-hidden ${resumeFile
+                                        ? "border-emerald-500/40 bg-emerald-500/5"
+                                        : "border-white/10 hover:border-accent shadow-2xl hover:bg-white/5"
+                                        }`}
+                                    onClick={() => document.getElementById("resume-input")?.click()}
+                                >
+                                    <input id="resume-input" type="file" accept=".pdf,.docx" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) setResumeFile(f); }} />
+                                    <div className="relative z-10">
+                                        {resumeFile ? (
+                                            <>
+                                                <div className="w-20 h-20 rounded-3xl bg-emerald-500/20 flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+                                                    <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+                                                </div>
+                                                <p className="text-2xl font-black text-white mb-2">{resumeFile.name}</p>
+                                                <p className="text-xs font-bold uppercase tracking-widest text-text-muted">READY FOR ANALYSIS • CLICK TO REPLACE</p>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <div className="w-20 h-20 rounded-3xl bg-white/5 flex items-center justify-center mx-auto mb-6 border border-white/5 group-hover:scale-110 transition-transform">
+                                                    <Upload className="w-10 h-10 text-text-muted group-hover:text-accent transition-colors" />
+                                                </div>
+                                                <p className="text-2xl font-black mb-2 tracking-tight">Drop your resume here</p>
+                                                <p className="text-sm font-bold uppercase tracking-widest text-text-muted">PDF or DOCX • Up to 10MB</p>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
-                            {resumeFile ? (
-                                <>
-                                    <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto mb-3" />
-                                    <p className="font-semibold text-emerald-400">{resumeFile.name}</p>
-                                    <p className="text-sm text-text-muted mt-1">
-                                        {(resumeFile.size / 1024).toFixed(0)} KB • Click to change
+                        {step === 3 && (
+                            <div className="space-y-8">
+                                <div className="text-center md:text-left">
+                                    <h2 className="text-4xl font-black mb-3 tracking-tighter">The <span className="gradient-text">Human Element</span></h2>
+                                    <p className="text-text-secondary text-lg font-medium">What should the interviewer know about your recent work?</p>
+                                </div>
+                                <div className="relative group">
+                                     <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-[2rem] blur opacity-10 group-focus-within:opacity-30 transition-opacity" />
+                                     <textarea
+                                        value={selfIntro}
+                                        onChange={(e) => setSelfIntro(e.target.value)}
+                                        placeholder="I've spent the last 4 years building high-frequency trading platforms at ScaleX. Recently I've been focusing on Rust-based microservices and distributed databases..."
+                                        className="input-field min-h-[250px] !py-8 !px-8 resize-none w-full border-glow relative bg-bg-primary/50"
+                                    />
+                                </div>
+                                <div className="flex items-center gap-3 p-4 rounded-2xl glass border-white/5 bg-white/5">
+                                    <Sparkles className="w-5 h-5 text-accent" />
+                                    <p className="text-xs font-medium text-text-secondary leading-relaxed">
+                                        Our AI uses this context to skip generic pleasantries and jump straight into high-impact questioning.
                                     </p>
-                                </>
-                            ) : (
-                                <>
-                                    <Upload className="w-12 h-12 text-text-muted mx-auto mb-3" />
-                                    <p className="font-semibold">
-                                        Drop your resume here or click to upload
-                                    </p>
-                                    <p className="text-sm text-text-muted mt-1">
-                                        PDF or DOCX, up to 10MB
-                                    </p>
-                                </>
-                            )}
-                        </div>
-
-                    </motion.div>
-                )}
-
-                {/* Step 3: Self Introduction */}
-                {step === 3 && (
-                    <motion.div
-                        key="step3"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                    >
-                        <h2 className="text-2xl font-bold mb-2">Tell us about yourself *</h2>
-                        <p className="text-text-secondary mb-8">
-                            A brief introduction so the interviewer knows your background
-                        </p>
-
-                        <textarea
-                            value={selfIntro}
-                            onChange={(e) => setSelfIntro(e.target.value)}
-                            placeholder="e.g. I'm a full-stack developer with 3 years of experience in React and Node.js. I've worked at a fintech startup where I built payment processing systems..."
-                            className="input-field min-h-[200px] resize-none"
-                            rows={8}
-                        />
-
-                        <p className="text-xs text-text-muted mt-3">
-                            The interviewer will reference this instead of asking you to
-                            &quot;tell me about yourself&quot;
-                        </p>
-                    </motion.div>
-                )}
-
-                {/* Step 4: Settings */}
-                {step === 4 && (
-                    <motion.div
-                        key="step4"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                    >
-                        <h2 className="text-2xl font-bold mb-2">Interview settings</h2>
-                        <p className="text-text-secondary mb-8">
-                            Choose your difficulty and duration
-                        </p>
-
-                        {/* Difficulty */}
-                        <div className="mb-8">
-                            <label className="block text-sm font-medium text-text-secondary mb-3">
-                                <Zap className="w-4 h-4 inline mr-1" /> Difficulty Level
-                            </label>
-                            <div className="space-y-3">
-                                {difficulties.map((d) => (
-                                    <button
-                                        key={d.value}
-                                        onClick={() => setDifficulty(d.value)}
-                                        className={`w-full text-left card py-3! px-4! border transition-all cursor-pointer ${difficulty === d.value ? d.activeColor : d.color
-                                            }`}
-                                    >
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-2xl">{d.icon}</span>
-                                            <div className="flex-1">
-                                                <p className="font-semibold">{d.label}</p>
-                                                <p className="text-xs text-text-secondary">
-                                                    {d.desc}
-                                                </p>
-                                            </div>
-                                            <p className="text-xs text-text-muted text-right">
-                                                {d.interviewer}
-                                            </p>
-                                        </div>
-                                    </button>
-                                ))}
+                                </div>
                             </div>
-                        </div>
+                        )}
 
-                        {/* Duration */}
-                        <div>
-                            <label className="block text-sm font-medium text-text-secondary mb-3">
-                                <Clock className="w-4 h-4 inline mr-1" /> Duration
-                            </label>
-                            <div className="grid grid-cols-5 gap-3">
-                                {durations.map((d) => (
-                                    <button
-                                        key={d.value}
-                                        onClick={() => setDuration(d.value)}
-                                        className={`card p-3! text-center transition-all cursor-pointer ${duration === d.value
-                                            ? "border-accent bg-accent/10"
-                                            : ""
-                                            }`}
-                                    >
-                                        <p className="font-bold text-lg">{d.label}</p>
-                                        <p className="text-xs text-text-muted">
-                                            {d.desc}
-                                        </p>
-                                    </button>
-                                ))}
+                        {step === 4 && (
+                            <div className="space-y-10">
+                                <div className="text-center md:text-left">
+                                    <h2 className="text-4xl font-black mb-3 tracking-tighter">Final <span className="gradient-text">Configuration</span></h2>
+                                    <p className="text-text-secondary text-lg font-medium">Choose your challenge level and session length.</p>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <label className="block text-xs font-black uppercase tracking-widest text-text-muted ml-1">Challenge Intensity</label>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                                        {difficulties.map((d) => (
+                                            <button
+                                                key={d.value}
+                                                onClick={() => setDifficulty(d.value)}
+                                                className={`card !p-6 flex flex-col items-center text-center transition-all cursor-pointer relative group overflow-hidden ${
+                                                    difficulty === d.value 
+                                                    ? "border-accent shadow-glow scale-[1.02] ring-1 ring-accent/30" 
+                                                    : "hover:border-white/20"
+                                                }`}
+                                            >
+                                                {difficulty === d.value && (
+                                                    <div className="absolute top-0 right-0 p-2">
+                                                        <CheckCircle2 className="w-4 h-4 text-accent" />
+                                                    </div>
+                                                )}
+                                                <span className="text-4xl mb-4 grayscale group-hover:grayscale-0 transition-all">{d.icon}</span>
+                                                <h3 className="text-lg font-black mb-1 text-white">{d.label}</h3>
+                                                <p className="text-[10px] font-bold text-text-muted leading-relaxed uppercase tracking-widest">Interviewer: {d.interviewer.split(' — ')[0]}</p>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <label className="block text-xs font-black uppercase tracking-widest text-text-muted ml-1">Session Duration</label>
+                                    <div className="grid grid-cols-5 gap-3">
+                                        {durations.map((d) => (
+                                            <button
+                                                key={d.value}
+                                                onClick={() => setDuration(d.value)}
+                                                className={`card p-5! text-center transition-all cursor-pointer border border-white/5 ${
+                                                    duration === d.value
+                                                        ? "bg-accent/10 border-accent/50 text-accent font-black shadow-inner"
+                                                        : "hover:bg-white/5 text-text-muted"
+                                                }`}
+                                            >
+                                                <p className="text-lg mb-0.5">{d.value}</p>
+                                                <p className="text-[8px] font-black uppercase tracking-[0.15em] opacity-60">MIN</p>
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </motion.div>
-                )}
+                </div>
 
                 {/* Navigation Buttons */}
-                <div className="flex items-center justify-between mt-10">
+                <div className="flex items-center justify-between mt-20 pt-10 border-t border-white/5">
                     <button
                         onClick={() => setStep((p) => Math.max(1, p - 1))}
-                        className={`btn-secondary flex items-center gap-2 ${step === 1 ? "invisible" : ""
-                            }`}
+                        className={`flex items-center gap-3 px-8 py-5 rounded-2xl glass font-black uppercase tracking-widest text-sm transition-all hover:bg-white/5 active:scale-95 ${step === 1 ? "invisible" : ""}`}
                     >
-                        <ArrowLeft className="w-4 h-4" /> Back
+                        <ArrowLeft className="w-5 h-5" /> Previous
                     </button>
 
                     {step < 4 ? (
                         <button
                             onClick={() => setStep((p) => Math.min(4, p + 1))}
                             disabled={!canProceed()}
-                            className="btn-primary flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                            className="btn-primary !px-12 !py-5 flex items-center gap-3 group disabled:opacity-20 shadow-2xl"
                         >
-                            Next <ArrowRight className="w-4 h-4" />
+                            Continue <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </button>
                     ) : (
-                        <button
-                            onClick={handleSubmit}
-                            disabled={loading || !canProceed()}
-                            className="btn-primary flex items-center gap-2 disabled:opacity-40"
-                        >
-                            {loading ? (
-                                <>
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                    Starting...
-                                </>
-                            ) : (
-                                <>
-                                    Start Interview <ArrowRight className="w-4 h-4" />
-                                </>
-                            )}
-                        </button>
+                        <>
+                            <button
+                                onClick={handleSubmit}
+                                disabled={loading || !canProceed()}
+                                className="btn-primary flex-1 !py-6 !px-8 flex items-center justify-center gap-3 shadow-2xl group"
+                            >
+                                <span className="text-sm font-black uppercase tracking-widest">{loading ? "Initializing..." : "Proceed to Content"}</span>
+                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </button>
+                            <Link
+                                href="/dashboard"
+                                className="glass flex-1 !py-6 !px-8 flex items-center justify-center rounded-4xl font-black uppercase tracking-widest text-sm hover:bg-white/5 transition-all text-text-muted hover:text-white"
+                            >
+                                Cancel Session
+                            </Link>
+                        </>
                     )}
                 </div>
             </main>
