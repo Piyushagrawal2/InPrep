@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.helpers.config import settings
 from app.helpers.database import init_db
-from app.api.routes import auth, interviews
+from app.api.routes import interviews, auth
 
 
 @asynccontextmanager

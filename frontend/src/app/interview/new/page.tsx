@@ -354,7 +354,7 @@ export default function NewInterviewPage() {
                                 disabled={loading || !canProceed()}
                                 className="btn-primary flex-1 !py-6 !px-8 flex items-center justify-center gap-3 shadow-2xl group"
                             >
-                                <span className="text-sm font-black uppercase tracking-widest">{loading ? "Initializing..." : "Proceed to Content"}</span>
+                                <span className="text-sm font-black uppercase tracking-widest">{loading ? "Initializing..." : "Start Interview"}</span>
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </button>
                             <Link

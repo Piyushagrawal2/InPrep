@@ -238,14 +238,14 @@ export default function InterviewSummaryPage() {
                                 href="/interview/new"
                                 className="btn-primary flex-1 !p-6 flex items-center justify-center gap-3 group shadow-2xl"
                             >
-                                <span className="text-sm font-black uppercase tracking-widest">Master New Skills</span>
+                                <span className="text-sm font-black uppercase tracking-widest">Start New Interview</span>
                                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
                             <Link
                                 href="/dashboard"
                                 className="glass flex-1 !p-6 flex items-center justify-center gap-3 rounded-[2rem] font-black uppercase tracking-widest text-sm hover:bg-white/5 transition-all text-text-muted hover:text-white"
                             >
-                                Back to Control Center
+                                Back to Dashboard
                             </Link>
                         </div>
                     </div>

@@ -131,7 +131,7 @@ function AuthContent() {
                         <div className="group">
                             <div className="flex justify-between items-center mb-2 mx-1">
                                 <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-text-muted group-focus-within:text-accent transition-colors">
-                                    Security Key
+                                    Password
                                 </label>
                                 {!isRegister && (
                                     <button type="button" className="text-[10px] font-bold text-accent hover:text-white transition-colors uppercase tracking-widest">

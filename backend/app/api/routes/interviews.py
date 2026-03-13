@@ -8,8 +8,13 @@ from app.helpers.database import get_db
 from app.helpers.config import settings
 from app.models.models import User, Interview, InterviewMessage, InterviewStatus
 from app.schemas.schemas import (
-    InterviewCreate, InterviewResponse, InterviewListResponse,
-    MessageCreate, MessageResponse, InterviewConversation, ResumeData
+    InterviewCreate,
+    InterviewResponse,
+    InterviewListResponse,
+    MessageCreate,
+    MessageResponse,
+    InterviewConversation,
+    ResumeData,
 )
 from app.services.auth_service import get_current_user
 from app.services.resume_parser import ResumeParser
@@ -18,11 +23,15 @@ from app.services.interview_engine import AIInterviewEngine
 router = APIRouter(prefix="/interviews", tags=["Interviews"])
 
 
-@router.post("/", response_model=InterviewResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    response_model=InterviewResponse,
+    status_code=status.HTTP_201_CREATED,
+)
 async def create_interview(
     data: InterviewCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     interview = Interview(
         user_id=current_user.id,
@@ -40,12 +49,15 @@ async def create_interview(
     return InterviewResponse.model_validate(interview)
 
 
-@router.post("/{interview_id}/upload-resume", response_model=InterviewResponse)
+@router.post(
+    "/{interview_id}/upload-resume",
+    response_model=InterviewResponse,
+)
 async def upload_resume(
     interview_id: str,
     file: UploadFile = File(...),
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     # Validate file
     if file.content_type not in [
@@ -88,10 +100,13 @@ async def upload_resume(
     return InterviewResponse.model_validate(interview)
 
 
-@router.get("/", response_model=InterviewListResponse)
+@router.get(
+    "/",
+    response_model=InterviewListResponse,
+)
 async def list_interviews(
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     result = await db.execute(
         select(Interview)
@@ -105,11 +120,14 @@ async def list_interviews(
     )
 
 
-@router.get("/{interview_id}", response_model=InterviewConversation)
+@router.get(
+    "/{interview_id}",
+    response_model=InterviewConversation,
+)
 async def get_interview(
     interview_id: str,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     result = await db.execute(
         select(Interview).where(Interview.id == interview_id, Interview.user_id == current_user.id)
@@ -131,11 +149,14 @@ async def get_interview(
     )
 
 
-@router.post("/{interview_id}/start", response_model=MessageResponse)
+@router.post(
+    "/{interview_id}/start",
+    response_model=MessageResponse,
+)
 async def start_interview(
     interview_id: str,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     result = await db.execute(
         select(Interview).where(Interview.id == interview_id, Interview.user_id == current_user.id)
@@ -178,12 +199,15 @@ async def start_interview(
     return MessageResponse.model_validate(msg)
 
 
-@router.post("/{interview_id}/message", response_model=MessageResponse)
+@router.post(
+    "/{interview_id}/message",
+    response_model=MessageResponse,
+)
 async def send_message(
     interview_id: str,
     message: MessageCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     result = await db.execute(
         select(Interview).where(Interview.id == interview_id, Interview.user_id == current_user.id)
@@ -237,11 +261,14 @@ async def send_message(
     return MessageResponse.model_validate(interviewer_msg)
 
 
-@router.post("/{interview_id}/end", response_model=InterviewResponse)
+@router.post(
+    "/{interview_id}/end",
+    response_model=InterviewResponse,
+)
 async def end_interview(
     interview_id: str,
     db: AsyncSession = Depends(get_db),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     result = await db.execute(
         select(Interview).where(Interview.id == interview_id, Interview.user_id == current_user.id)

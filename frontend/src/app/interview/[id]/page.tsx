@@ -219,7 +219,7 @@ export default function InterviewChatPage() {
                 <div className="max-w-4xl mx-auto space-y-10 relative z-10">
                     <div className="text-center mb-12">
                          <div className="inline-block px-4 py-1.5 rounded-full glass border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-text-muted mb-4">
-                            History started at {new Date(interview.id.split("-")[0] ? parseInt(interview.id.split("-")[0]) : Date.now()).toLocaleTimeString()}
+                         History started at {new Date().toLocaleDateString()}
                          </div>
                     </div>
 
